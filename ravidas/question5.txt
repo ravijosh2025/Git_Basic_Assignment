@@ -1,0 +1,53 @@
+Q5. Difference between --force push and --force-with-lease, You have to show the use of both, also you have to show in what scenario --force-with-lease is used
+
+Difference Between `--force` and `--force-with-lease` in Git
+Both `--force` and `--force-with-lease` are options used when pushing changes to a remote repository, and they are primarily used when rewriting history, such as after a rebase or a commit deletion. However, they have distinct behaviors and use cases.
+
+1.`--force` Push
+Definition
+-`--force`: This option forces the remote repository to accept the changes, regardless of the state of the remote branch. It overwrites the remote branch with the local branch forcefully.
+
+Use Case
+- Scenario: You have rewritten commit history (e.g., via `git rebase` or `git reset`) and want to push these changes to a remote branch.
+  
+Example
+-Command:
+  git push origin branch-name --force
+- This will overwrite the remote branch `branch-name` with your local branch, even if there are changes on the remote that you don’t have locally.
+
+Risk
+-Overwrites: It can overwrite commits on the remote branch that others might have pushed after your last pull, potentially leading to lost changes.
+
+2.`--force-with-lease` Push
+Definition
+- `--force-with-lease`: This option is a safer alternative to `--force`. It checks if the remote branch has been updated since you last fetched from it. If the remote branch has been updated, the push is rejected, preventing potential overwrites of someone else’s changes.
+
+Use Case
+-Scenario: You want to rewrite the history on a remote branch, but you also want to ensure that you do not overwrite any new commits that others might have pushed since your last fetch.
+  
+Example
+- Command:
+  git push origin branch-name --force-with-lease
+- This checks if the remote branch is in the same state as your last fetch. If the remote has changed, the push will fail, prompting you to resolve any discrepancies.
+
+Safety
+-Prevents Overwrites: It acts as a safeguard by ensuring that your push doesn’t overwrite changes pushed by others that you haven’t seen yet.
+
+Practical Demonstration of Use
+Scenario 1: Using `--force`
+1.Rebase your branch:
+   git rebase -i HEAD~3
+2.Force Push the Changes:
+   git push origin branch-name --force
+   - This will overwrite the remote branch even if others have pushed new commits.
+Scenario 2: Using `--force-with-lease`
+1.Rebase your branch:
+   git rebase -i HEAD~3
+2.Push with Safety:
+   git push origin branch-name --force-with-lease
+   - If someone else has pushed new commits to the remote branch since your last fetch, the push will fail. You will need to pull those changes and resolve any conflicts before pushing again.
+Conclusion
+- `--force`: Use when you are sure that overwriting the remote branch won’t cause issues or when working on a private branch.
+- `--force-with-lease`: Use in collaborative environments to prevent accidentally overwriting others’ changes, ensuring you don’t disrupt the team’s workflow.
+
+In collaborative projects, `--force-with-lease` is generally the safer and more recommended option to avoid inadvertently losing work.

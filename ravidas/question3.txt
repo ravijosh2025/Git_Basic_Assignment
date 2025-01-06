@@ -1,0 +1,44 @@
+Q3. How to combine two commits into one commit? For Example, you have 4 different commits C1, C2, C3, and  C4, and you to combine C2 and C3 into one single commit. 
+Combining Two Commits into One (Squashing Commits)
+
+To combine (squash) two commits into one, you can use an interactive rebase in Git. This process is commonly used to clean up the commit history by merging multiple related commits into a single, more meaningful commit.
+Use Case
+
+For example, if you have four commits (`C1`, `C2`, `C3`, `C4`) and you want to combine `C2` and `C3` into one commit, you can do this to simplify the commit history, making it easier to understand and review.
+
+Steps to Combine `C2` and `C3` into One Commit
+1.Start an Interactive Rebase:
+   - Begin an interactive rebase for the last 4 commits:
+     git rebase -i HEAD~4
+2.Modify the Rebase Todo List:
+   - This will open a text editor showing a list of the last 4 commits:
+     pick <hash1> C1
+     pick <hash2> C2
+     pick <hash3> C3
+     pick <hash4> C4
+3.Squash Commits:
+   - To combine `C2` and `C3`, change the word `pick` for `C3` to `squash` (or just `s`):
+     pick <hash1> C1
+     pick <hash2> C2
+     squash <hash3> C3
+     pick <hash4> C4
+4.Edit Commit Message:
+   - After closing the editor, Git will pause to allow you to combine the commit messages. It will open another editor showing the commit messages of `C2` and `C3`.
+   - You can edit the message to something more concise or relevant for the combined commit:
+     # This is a combination of 2 commits.
+     # The first commit's message:
+     C2's commit message
+     # The second commit's message:
+     C3's commit message
+   - Modify the commit message as needed, save, and close the editor.
+5.Finalize the Rebase:
+   - Git will apply the rebase and squash `C2` and `C3` into a single commit. If there are conflicts, resolve them manually, then continue the rebase:
+     git rebase --continue
+6.Push Changes (if necessary):
+   - If you have already pushed the commits to a remote repository, you will need to force-push the changes:
+     git push origin branch-name --force
+Notes
+-Backup: It's good practice to back up your branch before rebasing, especially if working on a shared branch.
+-History Rewriting: Rebasing rewrites commit history, so it's advised not to rebase commits that have already been pushed to a shared repository unless all collaborators are aware and agree.
+
+Using `git rebase -i` is a powerful way to manage commit history, making it cleaner and more understandable.
