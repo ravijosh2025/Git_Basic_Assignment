@@ -1,0 +1,26 @@
+Q5. How to un-stage changes from the staged area. write command for it.
+Unstaging Changes from the Staged Area
+If you have staged changes (added to the index) and want to move them back to the working directory, you can unstage them using the `git restore` or `git reset` commands.
+
+Commands to Unstage Changes
+1. Unstaging a Specific File**
+- Command:
+  git restore --staged <file-path>
+  - This command removes the specified file from the staging area without changing the working directory.
+- Example:
+  git restore --staged src/app.js
+2.Unstaging All Files
+-Command:
+  git restore --staged .
+  - This command removes all staged changes from the index.
+3.Using `git reset` to Unstage
+-Command (Specific File):
+  git reset <file-path>
+  - This moves the file from the staging area back to the working directory.
+-Example:
+  git reset src/app.js
+- Command (All Files):
+  git reset
+  - This unstages all changes but keeps the modifications in the working directory.
+Note
+- Unstaging does not discard the changes; it simply moves them from the staged area back to the working directory, so they are no longer included in the next commit.

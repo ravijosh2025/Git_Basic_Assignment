@@ -1,0 +1,31 @@
+Q4. How to delete one commit or multiple commits permanently Write a command for it. 
+Deleting One or Multiple Commits Permanently in Git
+Deleting commits from your Git history can be done using different approaches depending on whether you want to delete the most recent commit(s) or specific commits in the middle of the history. It’s important to note that once you delete commits, they are removed from the history, so be cautious when performing these actions, especially if the commits have been pushed to a shared repository.
+
+Scenarios and Commands
+1.Deleting the Most Recent Commit
+To delete the most recent commit permanently:
+-Command:
+  git reset --hard HEAD~1
+  - This command moves the branch pointer back by one commit and resets the working directory and index to match the new HEAD. The last commit is deleted from the history.
+2.Deleting Multiple Recent Commits
+To delete the last `n` commits:
+-Command:
+  git reset --hard HEAD~n
+  - Replace `n` with the number of commits you want to remove.
+
+3.Deleting a Specific Commit (Interactive Rebase)
+To delete a specific commit that is not the most recent, use an interactive rebase:
+-Start an Interactive Rebase:
+  git rebase -i HEAD~n
+  - Replace `n` with the number of commits you want to look back.
+
+3.Force Pushing After Deletion
+If you have pushed the commits to a remote repository, you will need to force push the changes to overwrite the remote history:
+-Command:
+  git push origin branch-name --force
+Caution
+-Collaboration: Deleting commits that have been pushed to a shared repository can cause issues for other collaborators. Ensure everyone is aware and has agreed to the changes.
+-Backup: Before performing destructive operations like `git reset --hard` or `git rebase`, consider creating a backup branch or tag for safety.
+
+By using these methods, you can remove unwanted commits from your Git history effectively, but always handle such operations with care to avoid disrupting your workflow or your team's.

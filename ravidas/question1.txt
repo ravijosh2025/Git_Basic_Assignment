@@ -1,0 +1,37 @@
+Q1.What is cherry-pick?Explain the use case of it and also write steps to do it.
+
+
+Cherry-Pick: Definition
+Cherry-picking in Git refers to the process of selecting a specific commit from one branch and applying it to another branch. This allows developers to selectively apply changes without merging entire branches, giving them finer control over what changes are included.
+
+Use Case
+cherry-picking is useful in scenarios where:
+- You need to apply a specific bug fix from one branch to another (e.g., from a feature branch to the main branch).
+- You want to backport a specific commit to a previous version of the code.
+- You need to selectively apply changes without bringing in all commits from another branch.
+
+Steps to Cherry-Pick a Commit
+
+1.Identify the Commit to Cherry-Pick:
+   - Use `git log` to find the commit hash that you want to cherry-pick.
+     git log
+     Note the commit hash (SHA) of the commit you want to cherry-pick.
+2.Checkout the Target Branch:
+   - Switch to the branch where you want to apply the commit.
+     git checkout target-branch
+3. Cherry-Pick the Commit:
+   - Use the `git cherry-pick` command followed by the commit hash.
+     git cherry-pick <commit-hash>
+   - If there are multiple commits to cherry-pick, list them all:
+     git cherry-pick <commit-hash1> <commit-hash2> ...
+4.Resolve Conflicts (if any):
+   - If there are conflicts, Git will pause the cherry-pick process and allow you to resolve them manually.
+   - Resolve conflicts in your code, mark them as resolved:
+     git add <file-with-conflict>
+   - Continue the cherry-pick process:
+     git cherry-pick --continue
+5.Finalize the Cherry-Pick:
+   - If the cherry-pick is successful, Git will create a new commit with the changes from the cherry-picked commit.
+6.Push the Changes:
+   - After cherry-picking, push the changes to the remote repository.
+     git push origin target-branch
